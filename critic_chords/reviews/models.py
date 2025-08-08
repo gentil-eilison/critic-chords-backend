@@ -2,7 +2,7 @@ from django.db import models
 
 from critic_chords.core import models as core_models
 from critic_chords.albums import models as albums_models
-from . import validators
+from . import validators, querysets
 
 
 class Review(core_models.CreatedAtModel):
@@ -18,6 +18,7 @@ class Review(core_models.CreatedAtModel):
         on_delete=models.CASCADE,
         related_name="reviews",
     )
+    objects: querysets.ReviewQuerySet = querysets.ReviewQuerySet.as_manager()
 
     class Meta:
         verbose_name = "Review"
@@ -38,6 +39,7 @@ class Like(core_models.CreatedAtModel):
         on_delete=models.CASCADE,
         related_name="reviews"
     )
+    objects: querysets.LikeQuerySet = querysets.LikeQuerySet.as_manager()
 
     class Meta:
         verbose_name = "Like"

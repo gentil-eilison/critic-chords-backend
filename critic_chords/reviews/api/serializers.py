@@ -1,18 +1,26 @@
+from datetime import date
+
 from rest_framework import serializers
 
 from critic_chords.reviews import models as reviews_models
 
 
-class UserStatsSerializer(serializers.Serializer):
+class UserStatsResponseSerializer(serializers.Serializer):
     reviews_liked = serializers.IntegerField()
     reviews_written = serializers.IntegerField()
     albums_rated = serializers.IntegerField()
 
 
 class ReviewListSerializer(serializers.ModelSerializer):
+    days_since = serializers.SerializerMethodField()
+
     class Meta:
         model = reviews_models.Review
-        fields = ("id", "rating", "commentary", "user")
+        fields = ("id", "rating", "commentary", "user", "days_since")
+
+    def get_days_since(self, review: reviews_models.Review):
+        delta = date.today() - review.created_at.date()
+        return delta.days
 
 
 class ReviewCreateSerializer(serializers.ModelSerializer):
