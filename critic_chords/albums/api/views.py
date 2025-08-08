@@ -7,13 +7,13 @@ from . import filters
 
 class AlbumListView(generics.ListAPIView):
     queryset = albums_models.Album.objects.all()
-    serializer_class = serializers.AlbumListSerializer
+    serializer_class = serializers.AlbumSerializer
     filterset_class = filters.AlbumFilter
 
 
 class AlbumDetailView(generics.RetrieveAPIView):
     queryset = albums_models.Album.objects.all()
-    serializer_class = serializers.AlbumDetailSerializer
+    serializer_class = serializers.AlbumSerializer
 
 
 class GenreListView(generics.ListAPIView):
