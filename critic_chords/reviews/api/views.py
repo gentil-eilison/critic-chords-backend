@@ -52,7 +52,3 @@ class MostRecentReviewsView(generics.ListAPIView):
 class LikeCreateView(mixins.NestedReviewViewMixin, generics.CreateAPIView):
     queryset = reviews_models.Review.objects.all()
     serializer_class = serializers.LikeCreateSerializer
-
-    def perform_create(self, serializer):
-        serializer.instance.review = self.review
-        serializer.save()

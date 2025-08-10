@@ -35,3 +35,4 @@ class NestedReviewViewMixin:
     def get_serializer_context(self):
         context: dict = super().get_serializer_context()
         context.update({"review": self.review})
+        return context

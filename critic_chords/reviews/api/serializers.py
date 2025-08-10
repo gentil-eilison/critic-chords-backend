@@ -16,7 +16,8 @@ class ReviewListSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = reviews_models.Review
-        fields = ("id", "rating", "commentary", "user", "days_since")
+        fields = ("id", "rating", "commentary", "user", "days_since", "likes")
+        depth = 1
 
     def get_days_since(self, review: reviews_models.Review):
         delta = date.today() - review.created_at.date()
@@ -35,7 +36,13 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
         )
 
 
-class LikeCreateSerializer(serializers.Serializer):
+class LikeCreateSerializer(serializers.ModelSerializer):
     class Meta:
         model = reviews_models.Like
         fields = ("user",)
+
+    def create(self, validated_data):
+        return reviews_models.Like.objects.create(
+            review=self.context.get("review"),
+            **validated_data
+        )

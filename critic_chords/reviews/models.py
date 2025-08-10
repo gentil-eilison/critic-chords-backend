@@ -37,7 +37,7 @@ class Like(core_models.CreatedAtModel):
     review = models.ForeignKey(
         Review,
         on_delete=models.CASCADE,
-        related_name="reviews"
+        related_name="likes"
     )
     objects: querysets.LikeQuerySet = querysets.LikeQuerySet.as_manager()
 

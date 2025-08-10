@@ -11,5 +11,7 @@ urlpatterns = [
     path("reviews/<str:user_email>/stats/",
          views.UserStatsView.as_view(), name="user_stats"),
     path("reviews/latest/",
-         views.MostRecentReviewsView.as_view(), name="latest")
+         views.MostRecentReviewsView.as_view(), name="latest"),
+    path("reviews/<int:review_id>/like/",
+         views.LikeCreateView.as_view(), name="like_create")
 ]
