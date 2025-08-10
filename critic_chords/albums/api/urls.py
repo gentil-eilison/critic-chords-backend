@@ -6,5 +6,6 @@ app_name = "albums"
 urlpatterns = [
     path("albums/", views.AlbumListView.as_view(), name="list"),
     path("albums/<int:pk>/", views.AlbumDetailView.as_view(), name="detail"),
-    path("genres/", views.GenreListView.as_view(), name="genre_list")
+    path("genres/", views.GenreListView.as_view(), name="genre_list"),
+    path("albums/trending/", views.TrendingAlbumsView.as_view(), name="trending")
 ]

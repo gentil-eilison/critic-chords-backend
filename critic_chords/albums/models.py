@@ -71,12 +71,18 @@ class Album(core_models.CreatedAtModel):
     overall_rating = models.FloatField(
         null=True,
         blank=True,
+        default=0,
         verbose_name="Overall Rating"
     )
-    objects = querysets.AlbumQuerySet.as_manager()
+    objects: querysets.AlbumQuerySet = querysets.AlbumQuerySet.as_manager()
 
-    # def update_overall_rating(self):
-    #     self.overall_rating = self.reviews.aggregate()
+    def update_overall_rating(self):
+        reviews_sum = self.reviews.aggregate(
+            reviews_sum=models.Sum("rating"))["reviews_sum"]
+        overall_rating = reviews_sum / self.reviews.count()
+
+        self.overall_rating = float(f"{overall_rating:.1f}")
+        self.save()
 
     class Meta:
         verbose_name = "Album"

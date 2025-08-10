@@ -18,6 +18,10 @@ class ReviewCreateListView(
             return serializers.ReviewListSerializer
         return serializers.ReviewCreateSerializer
 
+    def perform_create(self, serializer):
+        serializer.save()
+        serializer.instance.album.update_overall_rating()
+
 
 class UserStatsView(views.APIView):
     def get(self, request, user_email, *args, **kwargs):
@@ -38,3 +42,17 @@ class UserStatsView(views.APIView):
         stats_serializer = serializers.UserStatsResponseSerializer(
             Stat(**stats))
         return Response(data=stats_serializer.data, status=status.HTTP_200_OK)
+
+
+class MostRecentReviewsView(generics.ListAPIView):
+    queryset = reviews_models.Review.objects.latest()
+    serializer_class = serializers.ReviewListSerializer
+
+
+class LikeCreateView(mixins.NestedReviewViewMixin, generics.CreateAPIView):
+    queryset = reviews_models.Review.objects.all()
+    serializer_class = serializers.LikeCreateSerializer
+
+    def perform_create(self, serializer):
+        serializer.instance.review = self.review
+        serializer.save()

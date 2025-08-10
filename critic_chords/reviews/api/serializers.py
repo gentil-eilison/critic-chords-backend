@@ -33,3 +33,9 @@ class ReviewCreateSerializer(serializers.ModelSerializer):
             album=self.context.get("album"),
             **validated_data
         )
+
+
+class LikeCreateSerializer(serializers.Serializer):
+    class Meta:
+        model = reviews_models.Like
+        fields = ("user",)

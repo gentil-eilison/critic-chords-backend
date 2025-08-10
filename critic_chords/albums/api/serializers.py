@@ -16,7 +16,7 @@ class AlbumSerializer(serializers.ModelSerializer):
             "id", "title", "release_year",
             "duration", "tracks", "label",
             "genre", "artist", "cover_art",
-            "about", "reviews_count"
+            "about", "reviews_count", "overall_rating"
         )
 
 

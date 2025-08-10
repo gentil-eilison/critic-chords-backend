@@ -19,3 +19,8 @@ class AlbumDetailView(generics.RetrieveAPIView):
 class GenreListView(generics.ListAPIView):
     queryset = albums_models.Genre.objects.all()
     serializer_class = serializers.GenreListSerializer
+
+
+class TrendingAlbumsView(generics.ListAPIView):
+    queryset = albums_models.Album.objects.trending()
+    serializer_class = serializers.AlbumSerializer
